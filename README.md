@@ -5,6 +5,9 @@ The daemon state will update every 50 seconds to update the count, which will be
 
 ## Setup
 
+> [!WARNING] 
+> This app is a simple example and the code is not suitable for production. It has no validation, auth, error handling, rate limiting etc. 
+
 This has a PHP 7.0+ "backend", so requires some sort of webserver. I use Apache through XAMPP.  
 The app has a virtual host set up in `conf/extra/httpd-vhosts.conf`, a bit like this:
 
