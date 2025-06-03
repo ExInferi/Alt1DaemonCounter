@@ -1,0 +1,14 @@
+{
+  "appName": "Daemon Counter",
+  "description": "Counter that updates using a daemon",
+  "appUrl": "./index.html",
+  "configUrl": "./appconfig.json",
+  "iconUrl": "./icon.png",
+  "defaultWidth": 150,
+  "defaultHeight": 90,
+  "minWidth": 150,
+  "minHeight": 90,
+  "requestHandlers": [],
+  "activators": [],
+  "permissions": "overlay"
+}

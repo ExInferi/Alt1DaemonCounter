@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Daemon count</title>
+	<link rel="stylesheet" type="text/css" href="https://runeapps.org/nis/nis.css">
+	<script src="https://www.unpkg.com/alt1/dist/base/index.js"></script>
+</head>
+
+<body class="nis">
+	<div style="text-align:center; display: flex;justify-content: center;align-items: stretch;flex-direction: column;padding: .5rem;">
+   <h1 style="margin-block: .25rem;">Count: <span id="count">0</span></h1>
+	 <button id="btn" class="nisbutton" onclick="stop()">Stop</button>
+	</div>
+
+	<script>
+		if (window.alt1) {
+			A1lib.identifyApp('appconfig.json');
+			
+			if (!alt1.getStatusDaemonState()) {
+				alt1.registerStatusDaemon('http://alt1.local/daemon/status/', count.textContent); 
+				console.log(`[LOG ${new Date().toLocaleTimeString()}] Registered state:`, alt1.getStatusDaemonState());
+			} else {
+				let currentState = alt1.getStatusDaemonState();
+				console.log(`[LOG ${new Date().toLocaleTimeString()}] App loaded with state:`, currentState);
+				count.textContent = currentState;
+			}
+
+			var spamCount = setInterval(() => {
+				console.log(`[LOG ${new Date().toLocaleTimeString()}] Current daemon state:`, alt1.getStatusDaemonState());
+			}, 6000); 
+			
+			A1lib.on("daemonrun", (e) => {
+				console.log(`[LOG ${new Date().toLocaleTimeString()}] Daemon run event:`, e.result);
+				count.textContent = e.result.state;
+			});
+		}
+
+		function stop() {
+				alt1.registerStatusDaemon(null, null);
+				alt1.setTitleBarText('');
+				clearInterval(spamCount);
+				console.log(`[LOG ${new Date().toLocaleTimeString()}] Stopped daemon after counting to ${count.textContent}.`);
+				count.textContent = '💀';
+				btn.style.display = 'none';
+		}
+	</script>
+</body>
+
+</html>
